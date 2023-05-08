@@ -1,17 +1,15 @@
-import os
 from http import HTTPStatus
-from dotenv import load_dotenv
 import httpx
+from conf import gh_token
 
 
 class GitHubGraphQLClient:
     def __init__(self):
-        load_dotenv()
-        self.token = os.getenv("GITHUB_ACCESS_TOKEN")
+        self.token = gh_token()
         self.endpoint = "https://api.github.com/graphql"
         self.headers = {"Authorization": f"Bearer {self.token}"}
 
-    def get_pull_request(self, pr_num: int) -> dict:
+    async def get_pull_request(self, pr_num: int) -> dict:
         query = """
         query ($owner: String!, $repo: String!, $number: Int!) {
             repository(owner: $owner, name: $repo) {
@@ -51,7 +49,7 @@ class GitHubGraphQLClient:
         """
 
         variables = {"owner": "rust-lang", "repo": "rust", "number": pr_num}
-        response = self._send_request(query, variables)
+        response = await self._send_request(query, variables)
 
         if response.status_code != HTTPStatus.OK:
             raise Exception(
@@ -66,7 +64,7 @@ class GitHubGraphQLClient:
 
         return pull_request
 
-    def _send_request(self, query: str, variables: dict) -> httpx.Response:
+    async def _send_request(self, query: str, variables: dict) -> httpx.Response:
         response = httpx.post(
             self.endpoint,
             headers=self.headers,
@@ -75,11 +73,13 @@ class GitHubGraphQLClient:
 
         return response
 
-    def get_author(self, pr: int):
-        return self.get_pull_request(pr)['author']['login']
+    async def get_author(self, pr: int):
+        x = await self.get_pull_request(pr)
+        return x['author']['login']
 
-    def get_reviewer(self, pr: int):
-        return self.get_pull_request(pr)["assignees"]["nodes"][0]["login"] if self.get_pull_request(pr)["assignees"]["nodes"] else None
+    async def get_reviewer(self, pr: int):
+        x = await self.get_pull_request(pr)
+        return x["assignees"]["nodes"][0]["login"] if x["assignees"]["nodes"] else None
 
-    def last_updated_date(self, pr: int):
+    async def last_updated_date(self, pr: int):
         return self.get_pull_request(pr)['updatedAt']
