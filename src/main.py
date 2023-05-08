@@ -1,12 +1,12 @@
 import asyncio
-from docwrite import PullRequestSorter
+from docwrite import DocumentWriter
 from api import GitHubGraphQLClient
 
 
 async def main():
-    graphqlAPI = GitHubGraphQLClient()
-    pull_request_sorter = PullRequestSorter()
-    pull_request_sorter.register_type("S-waiting-on-review")
+    api = GitHubGraphQLClient()
+    doc = DocumentWriter()
+    doc.register_type("S-waiting-on-review")
     while True:
         pr_number = input("PR num > ")
         if pr_number == "q":
@@ -18,16 +18,16 @@ async def main():
             continue
         status = input("Status > ")
 
-        author = await graphqlAPI.get_author(pr_number)
-        reviewer = await graphqlAPI.get_reviewer(pr_number)
+        author = await api.get_author(pr_number)
+        reviewer = await api.get_reviewer(pr_number)
 
-        pull_request_sorter.add_pull_request(
+        doc.add_pull_request(
             pr_number, author, reviewer, status)
 
         print()
 
-    sorted_pull_requests = pull_request_sorter.get_sorted_pull_requests()
+    sorted_pull_requests = doc.get_sorted_pull_requests()
 
     print(sorted_pull_requests)
-    pull_request_sorter.write()
+    doc.write()
 asyncio.run(main())

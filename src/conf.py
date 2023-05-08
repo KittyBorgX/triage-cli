@@ -1,17 +1,21 @@
 import os
 from dotenv import load_dotenv
 
-def backup(): 
-    if os.getenv("TCLI_BACKUP_DIR") is None: return False
-    else: return True
-    
+
+def backup():
+    if os.getenv("TCLI_BACKUP_DIR") is None:
+        return False
+    else:
+        return True
+
+
 def backup_dir():
     load_dotenv()
-    if os.getenv("TCLI_BACKUP_DIR") is not None:
-        p = os.getenv("TCLI_BACKUP")
+    if backup():
+        p = os.getenv("TCLI_BACKUP_DIR")
         if not os.path.exists(p):
             os.makedirs(p)
-        return os.getenv("TCLI_BACKUP")
+        return os.getenv("TCLI_BACKUP_DIR")
     else:
         return
 

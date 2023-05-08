@@ -1,8 +1,9 @@
 from datetime import datetime
+import os
 from conf import backup_dir, backup
 
 
-class PullRequestSorter:
+class DocumentWriter:
     def __init__(self):
         self.sorted_pull_requests = {}
         self.cont_str = ""
@@ -33,5 +34,9 @@ class PullRequestSorter:
         if backup():
             filename = str(backup_dir()) + \
                 str(datetime.now()).split(" ")[0] + ".md"
-            with open(filename, "+x") as f:
-                f.write("".join(self.report))
+            if os.path.exists:
+                with open(filename, "+w") as f:
+                    f.write("".join(self.report))
+            else:
+                with open(filename, "+x") as f:
+                    f.write("".join(self.report))
