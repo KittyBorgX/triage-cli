@@ -1,6 +1,3 @@
-from typing import List
-
-
 class PullRequestSorter:
     def __init__(self):
         self.sorted_pull_requests = {}
