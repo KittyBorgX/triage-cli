@@ -1,3 +1,4 @@
 # python gitignore files (if any)
 __pycache__
 .conda
+.env

@@ -1,11 +1,12 @@
 import os
 from http import HTTPStatus
-
+from dotenv import load_dotenv
 import httpx
 
 
 class GitHubGraphQLClient:
     def __init__(self):
+        load_dotenv()
         self.token = os.getenv("GITHUB_ACCESS_TOKEN")
         self.endpoint = "https://api.github.com/graphql"
         self.headers = {"Authorization": f"Bearer {self.token}"}
