@@ -3,6 +3,7 @@ import datetime
 from api import GitHubAPI
 from document_writer import DocumentWriter
 from sort import PullRequestSorter
+from graphql_api import GitHubGraphQLClient
 
 
 async def main():
@@ -10,10 +11,9 @@ async def main():
     repo = "rust"
 
     api = GitHubAPI(owner, repo)
+    graphqlAPI = GitHubGraphQLClient()
 
-    document_writer = DocumentWriter()
     pull_request_sorter = PullRequestSorter()
-
 
     while True:
         pr_number = input("PR num > ")
@@ -26,22 +26,21 @@ async def main():
             continue
         status = input("Status > ")
 
-        author = await api.get_author(pr_number)
-        reviewer = await api.get_reviewer(pr_number)
-        date = await api.last_updated_date(pr_number)
+        author = graphqlAPI.get_author(pr_number)
+        reviewer = graphqlAPI.get_reviewer(pr_number)
+        date = graphqlAPI.last_updated_date(pr_number)
+
         dt = datetime.datetime.strptime(
             date,
             "%Y-%m-%dT%H:%M:%SZ"
         )
         pull_request_sorter.add_pull_request(
             pr_number, author, reviewer, status)
-        document_writer.add_pull_request(
-            pr_number, author, reviewer, status, dt)
 
-    report = document_writer.generate_report()
+        print()
+
     sorted_pull_requests = pull_request_sorter.get_sorted_pull_requests()
 
-    print(report)
-    print("\n".join(sorted_pull_requests))
+    print(sorted_pull_requests)
 
 asyncio.run(main())
