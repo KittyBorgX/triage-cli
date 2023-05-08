@@ -5,7 +5,8 @@ A CLI for triaging PR's
 ```
 git clone https://github.com/KittyBorgX/triage-cli.git
 cd triage-cli
-GITHUB_API_TOKEN=token python src/main.py
+pip install -r requirements.txt
+GITHUB_API_TOKEN=token python3 src/main.py
 ```
 
 ### Roadmap
