@@ -29,3 +29,15 @@ def gh_token():
         exit(1)
     else:
         return os.getenv("GITHUB_ACCESS_TOKEN")
+
+
+def zulip_token():
+    load_dotenv()
+    # TODO: handle case when key not set
+    return os.getenv("ZULIP_API_KEY")
+
+
+def zulip_email():
+    load_dotenv()
+    # TODO: handle case when key not set
+    return os.getenv("ZULIP_EMAIL_ID")

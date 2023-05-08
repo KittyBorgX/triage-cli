@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 from docwrite import DocumentWriter
 from api import GitHubGraphQLClient
 
@@ -28,6 +29,14 @@ async def main():
 
     sorted_pull_requests = doc.get_sorted_pull_requests()
 
+    zulip_post = input("Post the report to zulip? [Y/n] (Default: No)")
+    if zulip_post.lower() == 'y':
+        topic_name = str(datetime.now()).split(" ")[0]
+        from zulip import ZulipApi
+        zulipobj = ZulipApi()
+        zulipobj.post(topic_name, sorted_pull_requests)
+
     print(sorted_pull_requests)
     doc.write()
+
 asyncio.run(main())

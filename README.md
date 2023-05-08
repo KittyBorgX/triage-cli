@@ -23,7 +23,7 @@ The values can either be set in the `.env` file or can be set as system environm
 - [x] Sorting Pull Requests
 - [x] Writing to a backup directory
 - [x] Install script
-- [ ] Zulip Integration
+- [x] Zulip Integration
 - [ ] Setup CI
 - [ ] Error Messages & Error Handling
 - [ ] Better CLI (argparse)
