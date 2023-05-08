@@ -10,4 +10,11 @@ GITHUB_API_TOKEN=token python3 src/main.py
 ```
 
 ### Roadmap
+- [x] GraphQL Github API
+- [x] Sorting Pull Requests
+- [ ] Writing to a backup directory
+- [ ] Error Messages & Error Handling
+- [ ] Generic API (Not specific to rust-lang/rust)
 - [ ] Zulip Integration
+- [ ] Modifying GitHub Labels
+- [ ] RIIR

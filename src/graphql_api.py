@@ -18,6 +18,7 @@ class GitHubGraphQLClient:
                 pullRequest(number: $number) {
                     number
                     title
+                    closed
                     author {
                         login
                     }
