@@ -24,10 +24,10 @@ The values can either be set in the `.env` file or can be set as system environm
 - [x] Writing to a backup directory
 - [x] Install script
 - [x] Zulip Integration
+- [ ] RIIR
 - [ ] Setup CI
 - [ ] Error Messages & Error Handling
-- [ ] Better CLI (argparse)
+- [ ] Better CLI
 - [ ] Generic API (Not specific to rust-lang/rust)
 - [ ] A better project name
 - [ ] Modifying GitHub Labels
-- [ ] RIIR
