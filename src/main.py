@@ -5,9 +5,13 @@ from api import GitHubGraphQLClient
 
 
 async def main():
-    api = GitHubGraphQLClient()
     doc = DocumentWriter()
     doc.register_type("S-waiting-on-review")
+
+    # TODO: Make this available as args after argparse is introduced
+    extra = input(
+        "Add additional details to the pull requests? [Y/n] (Default: No): ")
+
     while True:
         pr_number = input("PR num > ")
         if pr_number == "q":
@@ -18,25 +22,28 @@ async def main():
             print("Invalid PR number. Please enter a valid PR number or q to quit.")
             continue
         status = input("Status > ")
+        pr_obj = GitHubGraphQLClient(pr_number)
+        author = pr_obj.get_author()
+        reviewer = pr_obj.get_reviewer()
 
-        author = await api.get_author(pr_number)
-        reviewer = await api.get_reviewer(pr_number)
-
-        doc.add_pull_request(
-            pr_number, author, reviewer, status)
-
+        if extra.lower() == 'y':
+            doc.add_pull_request(
+                pr_number, author, reviewer, status, [pr_obj.get_title(), pr_obj.last_updated_date(), pr_obj.labels()])
+        else:
+            doc.add_pull_request(
+                pr_number, author, reviewer, status)
         print()
 
-    sorted_pull_requests = doc.get_sorted_pull_requests()
+    spr = doc.get_report()
 
     zulip_post = input("Post the report to zulip? [Y/n] (Default: No)")
     if zulip_post.lower() == 'y':
         topic_name = str(datetime.now()).split(" ")[0]
         from zulip import ZulipApi
         zulipobj = ZulipApi()
-        zulipobj.post(topic_name, sorted_pull_requests)
+        zulipobj.post(topic_name, spr)
 
-    print(sorted_pull_requests)
+    print(spr)
     doc.write()
 
 asyncio.run(main())

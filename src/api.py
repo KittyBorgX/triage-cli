@@ -4,12 +4,13 @@ from conf import gh_token
 
 
 class GitHubGraphQLClient:
-    def __init__(self):
+    def __init__(self, pr: int):
         self.token = gh_token()
         self.endpoint = "https://api.github.com/graphql"
         self.headers = {"Authorization": f"Bearer {self.token}"}
+        self.pr_data = self.get_pull_request(pr)
 
-    async def get_pull_request(self, pr_num: int) -> dict:
+    def get_pull_request(self, pr_num: int) -> dict:
         query = """
         query ($owner: String!, $repo: String!, $number: Int!) {
             repository(owner: $owner, name: $repo) {
@@ -49,7 +50,7 @@ class GitHubGraphQLClient:
         """
 
         variables = {"owner": "rust-lang", "repo": "rust", "number": pr_num}
-        response = await self._send_request(query, variables)
+        response = self._send_request(query, variables)
 
         if response.status_code != HTTPStatus.OK:
             raise Exception(
@@ -65,7 +66,6 @@ class GitHubGraphQLClient:
         if pull_request.get("closed"):
             raise Exception(
                 f"Pull request {pr_num} is closed and cannot be triaged.")
-        print(type(pull_request))
         self.pr_data = pull_request
         return pull_request
 
@@ -78,13 +78,23 @@ class GitHubGraphQLClient:
 
         return response
 
-    async def get_author(self, pr: int):
-        x = await self.get_pull_request(pr)
-        return x['author']['login']
+    def get_author(self):
+        return self.pr_data['author']['login']
 
-    async def get_reviewer(self, pr: int):
-        x = await self.get_pull_request(pr)
-        return x["assignees"]["nodes"][0]["login"] if x["assignees"]["nodes"] else None
+    def get_reviewer(self):
+        return self.pr_data["assignees"]["nodes"][0]["login"] if self.pr_data["assignees"]["nodes"] else None
 
-    async def last_updated_date(self, pr: int):
-        return self.get_pull_request(pr)['updatedAt']
+    def last_updated_date(self):
+        return self.pr_data['updatedAt']
+    
+    def get_title(self):
+        return self.pr_data['title']
+    
+    def labels(self):
+        l = len(self.pr_data['labels']["nodes"])
+        labels_list = []
+        for i in range(l):
+            labels_list.append(self.pr_data['labels']["nodes"][i]["name"])
+        return labels_list
+    
+    
