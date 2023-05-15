@@ -11,6 +11,11 @@ class DocumentWriter:
         self.report = []
         self.d = None
 
+    def parse_date(self, date):
+        d = date.split("T")[0]
+        t = date.split("T")[1].split("Z")[0]
+        return f"{d} Time: {t}"
+
     def register_type(self, label):
         self.label = "# " + label + "\n"
 
@@ -25,6 +30,7 @@ class DocumentWriter:
             self.t = details[0]
             self.m = details[1]
             self.l = details[2]
+            self.c = details[3]
 
         self.get_sorted_pull_requests()
 
@@ -37,7 +43,7 @@ class DocumentWriter:
             pull_requests.sort(key=lambda x: x[0])
             if self.d is not None:
                 pull_requests_str = "\n".join(
-                    [f"- #{pr_number} - {status} - author: {author}\n{self.details(self.t, self.m, self.l)}" for pr_number, author, status in pull_requests])
+                    [f"- #{pr_number} - {status} - author: {author}\n{self.details(self.t, self.m, self.l, self.c)}" for pr_number, author, status in pull_requests])
             else:
                 pull_requests_str = "\n".join(
                     [f"- #{pr_number} - {status} - author: {author}\n" for pr_number, author, status in pull_requests])
@@ -48,11 +54,12 @@ class DocumentWriter:
     def get_report(self):
         return "".join(self.report)
 
-    def details(self, t, d, l):
+    def details(self, t, d, l, c):
         out_str = ""
         out_str += "\t<details>\n\t<summary>Details - Click Me </summary>\n\n"
         out_str += f"\tTitle: {t}\n\n"
-        out_str += f"\tLast Updated at: {d}\n"
+        out_str += f"\tLast Updated at: {self.parse_date(d)}\n\n"
+        out_str += f"\tCreated at: {self.parse_date(c)}\n\n"
         out_str += f"\tLabels: "
         for i in l:
             out_str += f"{i}, "

@@ -28,7 +28,7 @@ async def main():
 
         if extra.lower() == 'y':
             doc.add_pull_request(
-                pr_number, author, reviewer, status, [pr_obj.get_title(), pr_obj.last_updated_date(), pr_obj.labels()])
+                pr_number, author, reviewer, status, [pr_obj.get_title(), pr_obj.last_updated_date(), pr_obj.labels(), pr_obj.created_date()])
         else:
             doc.add_pull_request(
                 pr_number, author, reviewer, status)

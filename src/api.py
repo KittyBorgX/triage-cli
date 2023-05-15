@@ -90,6 +90,9 @@ class GitHubGraphQLClient:
     def get_title(self):
         return self.pr_data['title']
     
+    def created_date(self): 
+        return self.pr_data['createdAt']
+    
     def labels(self):
         l = len(self.pr_data['labels']["nodes"])
         labels_list = []
