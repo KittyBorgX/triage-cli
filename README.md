@@ -8,7 +8,7 @@ A CLI for triaging PR's
 git clone https://github.com/KittyBorgX/triage-cli.git
 cd triage-cli
 cp example.env .env # Fill out the .env file
-cargo run 
+python src/main.py 
 ```
 
 ### Environment variables
