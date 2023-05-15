@@ -8,7 +8,7 @@ A CLI for triaging PR's
 git clone https://github.com/KittyBorgX/triage-cli.git
 cd triage-cli
 cp example.env .env # Fill out the .env file
-python src/main.py 
+python src/main.py
 ```
 
 ### Environment variables
@@ -16,13 +16,14 @@ python src/main.py
 All the environment variables that are required to be set are mentioned in [example.env](./example.env).
 The values can either be set in the `.env` file or can be set as system environment variables.
 
-### Roadmap (riir)
+### Roadmap ()
 
-- [ ] GraphQL Github API
-- [ ] Sorting Pull Requests
-- [ ] Writing to a backup directory
+- [x] GraphQL Github API
+- [x] Sorting Pull Requests
+- [x] Writing to a backup directory
+- [x] Zulip Integration
+- [ ] Unit test
 - [ ] Install script
-- [ ] Zulip Integration
 - [ ] Setup CI
 - [ ] Error Messages & Error Handling
 - [ ] Better CLI
