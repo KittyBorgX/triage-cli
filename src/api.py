@@ -62,9 +62,14 @@ class GitHubGraphQLClient:
         if not pull_request:
             raise Exception(f"Pull request {pr_num} not found.")
 
+        if pull_request.get("closed"):
+            raise Exception(
+                f"Pull request {pr_num} is closed and cannot be triaged.")
+        print(type(pull_request))
+        self.pr_data = pull_request
         return pull_request
 
-    async def _send_request(self, query: str, variables: dict) -> httpx.Response:
+    def _send_request(self, query: str, variables: dict) -> httpx.Response:
         response = httpx.post(
             self.endpoint,
             headers=self.headers,
