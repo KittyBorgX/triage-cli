@@ -11,7 +11,7 @@ class DocumentWriter:
         self.report = []
         self.d = None
 
-    def parse_date(self, date):
+    def parse_date(self, date: str):
         d = date.split("T")[0]
         t = date.split("T")[1].split("Z")[0]
         return f"{d} Time: {t}"

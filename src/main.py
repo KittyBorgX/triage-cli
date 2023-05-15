@@ -2,15 +2,17 @@ import asyncio
 from datetime import datetime
 from docwrite import DocumentWriter
 from api import GitHubGraphQLClient
+from cli import CLIParser
 
 
 async def main():
     doc = DocumentWriter()
+    cli_parser = CLIParser()
     doc.register_type("S-waiting-on-review")
 
-    # TODO: Make this available as args after argparse is introduced
-    extra = input(
-        "Add additional details to the pull requests? [Y/n] (Default: No): ")
+    if cli_parser.has_arg("-h") or cli_parser.has_arg("--help"):
+        cli_parser.help()
+        exit(0)
 
     while True:
         pr_number = input("PR num > ")
@@ -26,7 +28,7 @@ async def main():
         author = pr_obj.get_author()
         reviewer = pr_obj.get_reviewer()
 
-        if extra.lower() == 'y':
+        if cli_parser.has_arg("-d") or cli_parser.has_arg("--details"):
             doc.add_pull_request(
                 pr_number, author, reviewer, status, [pr_obj.get_title(), pr_obj.last_updated_date(), pr_obj.labels(), pr_obj.created_date()])
         else:
@@ -36,8 +38,7 @@ async def main():
 
     spr = doc.get_report()
 
-    zulip_post = input("Post the report to zulip? [Y/n] (Default: No)")
-    if zulip_post.lower() == 'y':
+    if cli_parser.has_arg("--post-to-zulip") or cli_parser.has_arg("-pz"):
         topic_name = str(datetime.now()).split(" ")[0]
         from zulip import ZulipApi
         zulipobj = ZulipApi()
