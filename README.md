@@ -2,6 +2,19 @@
 
 A CLI for triaging PR's
 
+## Usage:
+
+```
+triage-cli: A command line interface for triaging pull requests.
+
+Usage: triage-cli [OPTIONS]
+
+Options:
+-pz, --post-to-zulip         Post the report on completion to zulip
+-d, --details                Add additional details like createdTime to the report
+-h, --help                   Print this help message
+```
+
 ## Build instructions
 
 1. Run these commands:
