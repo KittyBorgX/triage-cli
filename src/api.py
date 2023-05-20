@@ -29,8 +29,6 @@ class GitHubGraphQLClient:
                     createdAt
                     updatedAt
                     mergeable
-                    headRefName
-                    baseRefName
                     reviews(last: 1) {
                         nodes {
                             author {
@@ -92,6 +90,10 @@ class GitHubGraphQLClient:
     
     def created_date(self): 
         return self.pr_data['createdAt']
+
+    def mergeable(self): 
+        return self.pr_data['mergeable']
+    
     
     def labels(self):
         l = len(self.pr_data['labels']["nodes"])

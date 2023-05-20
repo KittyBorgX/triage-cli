@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 
 
 def backup():
-    if os.getenv("TCLI_BACKUP_DIR") is None:
+    load_dotenv()
+    if len(os.getenv("TCLI_BACKUP_DIR")) == 0:
         return False
     else:
         return True
@@ -22,7 +23,7 @@ def backup_dir():
 
 def gh_token():
     load_dotenv()
-    if os.getenv("GITHUB_ACCESS_TOKEN") is None:
+    if len(os.getenv("GITHUB_ACCESS_TOKEN")) == 0:
         print("error: There is no github token set")
         print(
             "note: Please set one in the .env file or set the $GITHUB_ACCESS_TOKEN environment variable")

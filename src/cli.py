@@ -33,4 +33,6 @@ class CLIParser:
         print("Options:")
         print("-pz, --post-to-zulip         Post the report on completion to zulip")
         print("-d, --details                Add additional details like createdTime to the report")
-        print("-h, --help                   Print this help message")
+        print("-o, --output [FILENAME]      Paste the report in the specified file")
+        print("-p, --print                  Print the report after triaging")
+        print("-h, --help                   Display this help message")

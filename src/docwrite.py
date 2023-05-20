@@ -31,6 +31,7 @@ class DocumentWriter:
             self.m = details[1]
             self.l = details[2]
             self.c = details[3]
+            self.me = details[4]
 
         self.get_sorted_pull_requests()
 
@@ -43,7 +44,7 @@ class DocumentWriter:
             pull_requests.sort(key=lambda x: x[0])
             if self.d is not None:
                 pull_requests_str = "\n".join(
-                    [f"- #{pr_number} - {status} - author: {author}\n{self.details(self.t, self.m, self.l, self.c)}" for pr_number, author, status in pull_requests])
+                    [f"- #{pr_number} - {status} - author: {author}\n{self.details(self.t, self.m, self.l, self.c, self.me)}" for pr_number, author, status in pull_requests])
             else:
                 pull_requests_str = "\n".join(
                     [f"- #{pr_number} - {status} - author: {author}\n" for pr_number, author, status in pull_requests])
@@ -54,7 +55,7 @@ class DocumentWriter:
     def get_report(self):
         return "".join(self.report)
 
-    def details(self, t, d, l, c):
+    def details(self, t, d, l, c, me):
         out_str = ""
         out_str += "\t<details>\n\t<summary>Details - Click Me </summary>\n\n"
         out_str += f"\tTitle: {t}\n\n"
@@ -64,6 +65,7 @@ class DocumentWriter:
         for i in l:
             out_str += f"{i}, "
         out_str += "\n\n"
+        out_str += f"\tStatus: {str(me).lower()}\n\n"
         out_str += f"\t</details>\n\n"
 
         return out_str
