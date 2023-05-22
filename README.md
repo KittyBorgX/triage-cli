@@ -12,8 +12,18 @@ Usage: triage-cli [OPTIONS]
 Options:
 -pz, --post-to-zulip         Post the report on completion to zulip
 -d, --details                Add additional details like createdTime to the report
--h, --help                   Print this help message
+-o, --output [FILENAME]      Paste the report in the specified file
+-p, --print                  Print the report after triaging
+-h, --help                   Display this help message
 ```
+
+## CLI Options:
+
+- `-pz` or `--post-to-zulip` : Posts the generated report after completion (on sending `q` as a query in the `PR num` field) to the `t-release/triage` stream with the topic name as the current date. This requires the `$ZULIP_EMAIL_ID` and `$ZULIP_API_KEY` environment variables to be set, else will error out.
+
+- `-d` or `--details` : Adds additional details to the pull request in the form of a clickable dropdown menu. The various details that are added into the dropdown menu are - `Title`, `Last Updated at`, `Created at`, `Labels`, `Status`.
+
+- `-p` or `--print` : Prints the report as raw markdown to the `stdout` instead of saving to a file.
 
 ## Build instructions
 
@@ -71,8 +81,9 @@ The values can either be set in the `.env` file or can be set as system environm
 - [x] Install script
 - [x] Better CLI
 - [x] Error Messages & Error Handling
+- [x] Documentation
+- [ ] Modifying GitHub Labels
 - [ ] Unit test
 - [ ] Setup CI
 - [ ] A better project name
-- [ ] Modifying GitHub Labels
 - [ ] RIIR?
