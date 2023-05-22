@@ -69,11 +69,10 @@ The values can either be set in the `.env` file or can be set as system environm
 - [x] Writing to a backup directory
 - [x] Zulip Integration
 - [x] Install script
+- [x] Better CLI
+- [x] Error Messages & Error Handling
 - [ ] Unit test
 - [ ] Setup CI
-- [ ] Error Messages & Error Handling
-- [ ] Better CLI
-- [ ] Generic API (Not specific to rust-lang/rust)
 - [ ] A better project name
 - [ ] Modifying GitHub Labels
 - [ ] RIIR?

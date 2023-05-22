@@ -3,9 +3,11 @@ from datetime import datetime
 from docwrite import DocumentWriter
 from api import GitHubGraphQLClient
 from cli import CLIParser
+from conf import check_env_vars
 
 
 async def main():
+    check_env_vars()
     doc = DocumentWriter()
     cli_parser = CLIParser()
     doc.register_type("S-waiting-on-review")

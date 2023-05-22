@@ -1,4 +1,5 @@
 import sys
+from error import Error
 
 
 class CLIParser:
@@ -19,9 +20,7 @@ class CLIParser:
         for i in self.args:
             if i == arg:
                 if str(self.args[i+1]).rfind("-") or str(self.args[i+1]).rfind("--"):
-                    print(
-                        f"error: Argument {self.args[i+1]} must be an argument not a flag")
-                    exit(1)
+                    Error(f"error: Argument {self.args[i+1]} must be an argument not a flag")
                 return self.args[i+1]
         return None
 

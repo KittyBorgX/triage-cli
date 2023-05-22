@@ -1,10 +1,11 @@
 import os
 from dotenv import load_dotenv
+from error import Error
 
 
 def backup():
     load_dotenv()
-    if len(os.getenv("TCLI_BACKUP_DIR")) == 0:
+    if os.getenv("TCLI_BACKUP_DIR") is None:
         return False
     else:
         return True
@@ -23,22 +24,36 @@ def backup_dir():
 
 def gh_token():
     load_dotenv()
-    if len(os.getenv("GITHUB_ACCESS_TOKEN")) == 0:
-        print("error: There is no github token set")
-        print(
+    if os.getenv("GITHUB_ACCESS_TOKEN") is None:
+        Error("error: There is no github token set", False)
+        Error(
             "note: Please set one in the .env file or set the $GITHUB_ACCESS_TOKEN environment variable")
-        exit(1)
     else:
         return os.getenv("GITHUB_ACCESS_TOKEN")
 
 
 def zulip_token():
     load_dotenv()
-    # TODO: handle case when key not set
-    return os.getenv("ZULIP_API_KEY")
+
+    if os.getenv("ZULIP_API_KEY") is None:
+        Error("error: There is no zulip api key set", False)
+        Error(
+            "note: Please set one in the .env file or set the $ZULIP_API_KEY environment variable")
+
+    else:
+        return os.getenv("ZULIP_API_KEY")
 
 
 def zulip_email():
     load_dotenv()
-    # TODO: handle case when key not set
-    return os.getenv("ZULIP_EMAIL_ID")
+
+    if os.getenv("ZULIP_EMAIL_ID") is None:
+        Error("error: There is no zulip email id set")
+        Error(
+            "note: Please set one in the .env file or set the $ZULIP_EMAIL_ID environment variable")
+    else:
+        return os.getenv("ZULIP_API_KEY")
+
+
+def check_env_vars():
+    gh_token()
