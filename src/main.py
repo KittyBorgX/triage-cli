@@ -6,7 +6,7 @@ from cli import CLIParser
 from conf import check_env_vars
 
 
-async def main():
+def main():
     check_env_vars()
     doc = DocumentWriter()
     cli_parser = CLIParser()
@@ -51,4 +51,5 @@ async def main():
 
     doc.write()
 
-asyncio.run(main())
+
+main()

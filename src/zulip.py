@@ -1,5 +1,6 @@
 import httpx
 from conf import zulip_email, zulip_token
+from error import Error
 
 
 class ZulipApi:
@@ -14,5 +15,8 @@ class ZulipApi:
             "content": content,
         }
 
-        r = httpx.post(self.post_url, data=req,
+        httpx.post(self.post_url, data=req,
                        auth=(zulip_email(), zulip_token()))
+        Error(
+            f"note: posted the report to zulip in the topic name {topic}", False)
+        

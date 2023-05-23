@@ -85,5 +85,4 @@ The values can either be set in the `.env` file or can be set as system environm
 - [ ] Modifying GitHub Labels
 - [ ] Unit test
 - [ ] Setup CI
-- [ ] A better project name
 - [ ] RIIR?
