@@ -49,7 +49,8 @@ def main():
     if cli_parser.has_arg("-p") or cli_parser.has_arg("--print"):
         print(spr)
 
-    doc.write()
+    if cli_parser.has_arg("-o") or cli_parser.has_arg("--output"):
+        doc.write()
 
 
 main()

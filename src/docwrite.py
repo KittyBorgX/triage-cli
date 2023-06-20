@@ -1,8 +1,6 @@
 from datetime import datetime
 import os
 from conf import backup_dir, backup
-from api import GitHubGraphQLClient
-
 
 class DocumentWriter:
     def __init__(self):

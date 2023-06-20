@@ -15,8 +15,7 @@ class ZulipApi:
             "content": content,
         }
 
-        httpx.post(self.post_url, data=req,
-                       auth=(zulip_email(), zulip_token()))
+        httpx.post(self.post_url, data=req, auth=(zulip_email(), zulip_token()))
+
         Error(
             f"note: posted the report to zulip in the topic name {topic}", False)
-        

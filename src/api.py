@@ -100,6 +100,4 @@ class GitHubGraphQLClient:
         labels_list = []
         for i in range(l):
             labels_list.append(self.pr_data['labels']["nodes"][i]["name"])
-        return labels_list
-    
-    
+        return labels_list 

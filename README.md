@@ -82,6 +82,7 @@ The values can either be set in the `.env` file or can be set as system environm
 - [x] Better CLI
 - [x] Error Messages & Error Handling
 - [x] Documentation
+- [ ] Suggest PR's
 - [ ] Modifying GitHub Labels
 - [ ] Unit test
 - [ ] Setup CI
